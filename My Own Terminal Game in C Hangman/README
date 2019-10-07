@@ -1,0 +1,5 @@
+Hangman 
+By David Barko
+This Program is written in C and is meant to ran on a linux terminal.
+Rules are simple, one person enters a word and the other has to guess it.
+In game instructions are available 
