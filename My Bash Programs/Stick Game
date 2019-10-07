@@ -1,0 +1,143 @@
+#!/bin/bash
+
+
+########################################################################################################################################
+#***INFORMATION***#														       
+#NAME:  David Barko														       
+														 
+#DATE: FALL 10/10/2017            												       
+#Programming Assingment #1          												       
+															               
+#PROGRAM DESCRIPTION: This program is a small game that allows the user and the computer                                               
+#to play in a match of picking sticks the limit is 1, 2, or 3 sticks. Anything higher than 3 is considered cheating.		       
+#the first player to pick the last stick wins...                               							       
+########################################################################################################################################
+
+
+##############################################
+##############################################
+
+
+# This section propmts a number from the user to setup the game.
+################################################
+var=$1
+  if [[ "$var" == "" ]]
+     then
+	echo "Please enter a number"
+        echo -n ">"
+        read var
+#------------------------------------------------------
+        if [[ $var == "" ]]
+         then
+          echo "ERROR due to invalid input."
+          exit
+         else
+                for ((a=1; a <= $var; a++))
+                  do
+                    echo -n "|"
+                  done
+                  echo "($var)"
+        fi
+#------------------------------------------------------
+     else
+	  for ((a=1; a <= $var; a++))
+            do
+              echo -n "|"
+            done
+          echo "($var)"
+   fi 
+
+
+##########################################################
+#end of prompting section
+
+until (( $var ==  0 ))
+do
+#calculations of the AI & human picks
+#############################################################
+ mod=$((var%4))
+  
+   if [[ $mod == 0 ]]
+    then 
+     var=$((var - 1))
+	for ((a=1; a <= $var; a++))  
+          do
+            echo -n "|"
+          done
+	  echo "$var"
+     else 
+     var=$((var-mod))
+	echo "computer picks $mod sticks"
+ 	 for ((a=1; a <= $var; a++))
+       	   do
+             echo -n "|"
+   	   done            
+           echo "($var)"
+
+    fi
+#--------------AI win System-------------------
+  if (("$var" == 0))
+   then 
+    echo "YOU lose"
+    exit
+  fi
+#-------------End of AI win sytem---------------
+#----Human pick w/ anti cheat system------------------------------------------------------------
+   echo "pick the number of sticks you want 1, 2, or 3"
+echo -n ">"
+read num
+A=1
+B=2
+C=3
+D=0
+   if (("$num" == "$A"))||(("$num" == "$B"))||(("$num" == "$C"))
+      then
+         var=$((var-num))
+#--------------------win system-------------------------------------------
+	   if (($var == $D))
+	    then 
+	    echo "Congrats!!! You Won by choosing the last stick!!!"
+            exit
+           fi
+#-------------------End of win system------------------------------------
+	 for ((a=1; a <= $var; a++))
+           do
+             echo -n "|"
+           done
+           echo "($var)"
+
+      else
+         echo "NO CHEATING!!! Pick numbers 1, 2, or 3!!!"
+         echo -n ">"
+         read num2
+ 
+            if (("$num2" == "$A"))||(("$num2" == "$B"))||(("$num2" == "$C"))
+               then
+                 var=$((var-num2))
+#--------------------win system-------------------------------------------
+           if (($var == $D))
+            then
+            echo "Congrats!!! You Won by choosing the last stick!!!"
+            exit
+           fi
+#-------------------End of win system------------------------------------
+
+		      for ((a=1; a <= $var; a++))
+	                do
+         	    	  echo -n "|"
+         	        done
+          	        echo "($var)"
+
+               else
+                 echo  "You might think that cheater is another fancy word for winner, BUT NOT IN MY GAMES!!! GOODBYE!!"
+                exit
+            fi
+
+      fi
+
+#----End of human pick w/ anti cheat system ------------------------------------------------------
+##############################################################
+#end of calclualtions of the AI & human picks
+done
+
+# END of programed stick game!!!!

@@ -1,0 +1,146 @@
+#!/bin/bash
+#####################################################
+
+########################################################################################################################################
+#***INFORMATION***#                                                                                                                    #
+#NAME:  David Barko                                                                                                                    #
+#DATE: FALL 11/2/2017                                                                                                                  #
+#Programming Assingment #3                                                                                                             #
+                                                                                                                                       #
+#PROGRAM DESCRIPTION: This program is a small game called Highlow that asks the user to choose a number between 1 - 100				   #
+#the program then trys to guess the number by using a special algorithm, when the computer geusses the wrong answer                    #
+#the user inputs "h" for high or "l" for low... Once the computer guess the persons number the person types "c" for correct.           #
+#cheating will be detected....																									       #
+#also the person can enter a number on the command line to afte "highlow" to play for 1 - thenumber								       #
+########################################################################################################################################
+
+####################################################
+#############Variable declaration#######################################
+checknum=$1
+low=1
+high=100
+guess=50
+hlc="a"
+########################################################################
+
+
+
+
+#!!!!!!!!!!!!!!!!!!!!!!!!! place where game is played if no other value was inputed after 'highlow' !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if [[ $checknum == "" ]]
+ 	 then 
+#--------------------------------Instructions on how to play and what to type for the user---------------------------------------------------
+	  echo "Welcome to the little game of Highlow!!! Where you think of a number and I guess it!"
+ 	  echo "please think of a number in your head from 1 - 100"
+	  echo "all you have to do is type (h) if I guessed to high and (l) if I geussed to low, and (c) if I guessed correctly"
+	  echo "once you thought of a number press any key to continue, im going to try to guess your number!!!"
+	  read -n1 -s 
+#----------------------------------------------------end of Instructions--------------------------------------------------------------------- 
+
+######################## Main block of code for playing from number 1-100  ###################################################
+	while  (( 7 > 6 )) #infinite loop
+	 do
+
+	  guess=$((($high+$low)/2))
+	  echo -e "Is your Number $guess ? \n"
+	  read -n1 hlc
+	  echo -e "\n"
+	  num=$(($num+1))
+
+             if [[ $hlc == "l" ]] #if l is typed
+              then 
+        	low=$((guess+1))
+
+#__________________________Anti Cheat system__________________________________________________
+                  if [[ $high -lt $low ]]
+		   then 
+		     echo "Im sorry, your a cheater or you forgot your number but, in my eyes your always trying to cheat to win!"
+	             exit
+		  fi
+#__________________________ End of Anti Cheat system__________________________________________
+
+             elif [[ $hlc == "h" ]] #if h is typed
+	      then 
+                high=$((guess-1))
+
+#__________________________Anti Cheat system__________________________________________________
+                 if [[ $high -lt $low ]] 
+                   then
+                     echo "Im sorry, your a cheater or you forgot your number but, in my eyes your always trying to cheat to win!"
+                     exit
+                  fi
+#__________________________End of Anti Cheat system___________________________________________
+
+
+	     elif [[ $hlc == "c" ]] # if c is typed
+	      then
+	        echo "I guessed your number in $num trys! I always win! becuase im obviosly more superior than you!"
+		exit
+
+             else 
+		echo "invalid input please enter either (h) for high, (l) for low, or (c) if I guess correctly!"
+	        num=$(($num - 1))
+             fi
+	 done
+########################## End of main block of code for playing 1 - 100 #######################################################
+################################################################################################################################
+
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! place where game is played if value is entered after 'highlow' !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	else 
+#--------------------------------Instructions on how to play and what to type for the user--------------------------------------------------
+	  echo "Welcome to the little game of Highlow!!! Where you think of a number and I guess it!"
+	  echo "pick a number between 1 - $checknum"
+          echo "all you have to do is type (h) if I guessed to high and (l) if I geussed to low, and (c) if I guessed correctly"
+          echo "once you thought of a number press any key to continue, im going to try to guess your number!!!"
+          read -n1 -s
+#----------------------------------------------------end of Instructions--------------------------------------------------------------------- 
+###################pretty much same code as the first except high is replaced with users input############################
+        high=$checknum
+
+        while  (( 7 != 1 ))
+         do
+
+          guess=$((($high+$low)/2))
+          echo -e "Is your Number $guess \n"
+          read -n1 hlc
+          echo -e "\n"
+          num=$(($num+1))
+
+             if [[ $hlc == "l" ]]
+              then
+                low=$((guess+1))
+		
+                  if [[ $high -lt $low ]] # anti cheat system
+                   then
+                     echo "Im sorry, your a cheater or you forgot your number, but in my eyes your always trying to cheat to win!"
+                     exit
+                  fi
+
+             elif [[ $hlc == "h" ]]
+              then
+                high=$((guess-1))
+
+                 if [[ $high -lt $low ]] #anti cheat system
+                   then
+                     echo "Im sorry, your a cheater or you forgot your number, in my eyes your always trying to cheat to win!"
+                     exit
+                  fi
+
+
+             elif [[ $hlc == "c" ]]
+              then
+                echo "I guessed your number in $num trys! I always win! becuase im obviosly more superior than you!"
+                exit
+
+             else
+                echo "invalid input please enter either (h) for high, (l) for low, or (c) if I guess correctly!"
+                num=$(($num - 1))
+             fi
+         done
+       
+
+
+ fi    
+
+##########################################################End of PA3 Highlow game!##########################################################
